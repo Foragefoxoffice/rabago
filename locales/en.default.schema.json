@@ -1,0 +1,113 @@
+{
+  "general": {
+    "404": "Not found",
+    "article": "Article",
+    "block": "Block",
+    "blog": "Blog",
+    "cart": "Cart",
+    "collection": "Collection",
+    "collections": "Collections",
+    "collection_card": "Collection card",
+    "collections_grid": "Collections grid",
+    "colors": "Colors",
+    "column": "Column",
+    "content": "Content",
+    "custom_section": "Custom section",
+    "fonts": "Fonts",
+    "footer": "Footer",
+    "group": "Group",
+    "header": "Header",
+    "layout": "Layout",
+    "main": "Main",
+    "page": "Page",
+    "password": "Password",
+    "primary": "Primary",
+    "product": "Product",
+    "row": "Row",
+    "search": "Search",
+    "secondary": "Secondary",
+    "section": "Section",
+    "settings": "Settings",
+    "sidebar": "Sidebar",
+    "text": "Text",
+    "theme": "Theme",
+    "typography": "Typography",
+    "buttons": "Buttons",
+    "animations": "Animations",
+    "grid": "Grid",
+    "header_footer": "Header & Footer"
+  },
+  "labels": {
+    "alignment": "Alignment",
+    "background": "Background",
+    "foreground": "Foreground",
+    "global_gradient": "Global gradient",
+    "grid_gap": "Grid spacing",
+    "grid_item_width": "Grid item width",
+    "input_corner_radius": "Input corner radius",
+    "layout_direction": "Layout direction",
+    "menu": "Menu",
+    "padding": "Padding",
+    "page_margin": "Page margin",
+    "page_width": "Page width",
+    "show_payment_icons": "Show payment icons",
+    "text_style": "Text style",
+    "text": "Text",
+    "base_font_size": "Base font size",
+    "heading_transform": "Heading transform",
+    "button_bg": "Button background",
+    "button_text": "Button text",
+    "button_radius": "Button radius",
+    "button_style": "Button style",
+    "enable_boxed_layout": "Enable boxed layout",
+    "enable_scroll_animations": "Enable scroll animations",
+    "animation_speed": "Animation speed",
+    "animation_style": "Animation style",
+    "card_corner_radius": "Card corner radius",
+    "enable_card_shadow": "Enable card shadow",
+    "sticky_header": "Sticky header",
+    "transparent_header": "Transparent header",
+    "footer_padding": "Footer padding"
+  },
+  "options": {
+    "alignment": {
+      "left": "Left",
+      "center": "Center",
+      "right": "Right"
+    },
+    "direction": {
+      "horizontal": "Horizontal",
+      "vertical": "Vertical"
+    },
+    "page_width": {
+      "narrow": "Narrow",
+      "wide": "Wide",
+      "full": "Full width"
+    },
+    "size": {
+      "large": "Large",
+      "small": "Small"
+    },
+    "text_style": {
+      "title": "Title",
+      "subtitle": "Subtitle",
+      "normal": "Normal text"
+    },
+    "heading_transform": {
+      "none": "None",
+      "uppercase": "Uppercase",
+      "capitalize": "Capitalize"
+    },
+    "button_style": {
+      "solid": "Solid",
+      "outline": "Outline",
+      "ghost": "Ghost"
+    },
+    "animation_style": {
+      "fade": "Fade",
+      "slide": "Slide",
+      "zoom": "Zoom",
+      "flip": "Flip"
+    }
+  }
+}

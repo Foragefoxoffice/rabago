@@ -1,0 +1,196 @@
+<section class="collections-slider container">
+  <div class="collections-header">
+    <h2 class="heading">{{ 'collections.title' | t }}</h2>
+  </div>
+
+  <div class="swiper collections-swiper"
+       data-swiper='{
+         "slidesPerView": {{ section.settings.slides_desktop }},
+         "spaceBetween": {{ section.settings.grid_gap }},
+         "loop": {{ section.settings.loop | json }},
+         "navigation": {{ section.settings.show_arrows | json }},
+         "breakpoints": {
+           "320": { "slidesPerView": {{ section.settings.slides_mobile }} },
+           "768": { "slidesPerView": {{ section.settings.slides_tablet }} },
+           "1024": { "slidesPerView": {{ section.settings.slides_desktop }} }
+         }
+       }'>
+    <div class="swiper-wrapper">
+      {% for collection in collections %}
+        <div class="swiper-slide">
+          <a class="collection-card" href="{{ collection.url }}">
+            {% if collection.featured_image %}
+              {% render 'image',
+                class: 'collection-card__image',
+                image: collection.featured_image,
+                width: 600,
+                height: 600,
+                crop: 'center'
+              %}
+            {% else %}
+              <div class="collection-card__placeholder"></div>
+            {% endif %}
+
+            <div class="collection-card__content">
+              <p class="collection-card__title">{{ collection.title }}</p>
+              
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_arrows %}
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+.collections-slider {
+  position: relative;
+}
+.collections-header {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.collections-swiper {
+  width: 100%;
+}
+.collection-card {
+  background: #b0b0b0;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+.collection-card:hover {
+  transform: translateY(-5px);
+}
+.collection-card__image {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+.collection-card__placeholder {
+  width: 100%;
+  aspect-ratio: 1/1;
+  background: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.collection-card__content {
+  padding: 12px;
+  text-align: center;
+}
+.collection-card__title {
+  font-weight: 700;
+  font-size: 16px;
+  margin: 5px 0;
+}
+.collection-card__desc {
+  font-size: 14px;
+  color: #444;
+}
+
+/* Swiper arrows */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
+  color: #000;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 16px;
+  font-weight: bold;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".collections-swiper").forEach(function (el) {
+    let options = {};
+    try {
+      options = JSON.parse(el.getAttribute("data-swiper"));
+    } catch (e) {
+      console.warn("Invalid Swiper options for:", el);
+    }
+    if (options.navigation) {
+      options.navigation = {
+        nextEl: el.querySelector(".swiper-button-next"),
+        prevEl: el.querySelector(".swiper-button-prev"),
+      };
+    }
+    new Swiper(el, options);
+  });
+});
+</script>
+
+{% schema %}
+{
+  "name": "Collections Slider",
+  "settings": [
+    {
+      "type": "range",
+      "id": "slides_desktop",
+      "label": "Slides per view (Desktop)",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "slides_tablet",
+      "label": "Slides per view (Tablet)",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "slides_mobile",
+      "label": "Slides per view (Mobile)",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "label": "Gap between slides (px)",
+      "min": 0,
+      "max": 50,
+      "step": 5,
+      "default": 20
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Enable Looping",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show Navigation Arrows",
+      "default": true
+    }
+  ],
+  "presets": [{ "name": "Collections Slider" }]
+}
+
+{% endschema %}

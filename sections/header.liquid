@@ -1,0 +1,234 @@
+<header class="site-header" data-header>
+  <div class="header__inner">
+    
+    <!-- Logo -->
+    <div class="header__logo">
+      {% if section.settings.logo != blank %}
+        <a href="{{ routes.root_url }}">
+          <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}">
+        </a>
+      {% else %}
+        <a href="{{ routes.root_url }}" class="logo-text">{{ shop.name }}</a>
+      {% endif %}
+    </div>
+
+    <!-- Navigation -->
+    <nav class="header__menu">
+      <ul>
+        {% for link in section.settings.menu.links %}
+          <li>
+            <a href="{{ link.url }}">{{ link.title }}</a>
+            {% if link.links.size > 0 %}
+              <ul class="dropdown">
+                {% for child in link.links %}
+                  <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </nav>
+
+    <!-- Right side icons -->
+    <div class="header__actions">
+
+      <!-- Language & Currency -->
+      {% if section.settings.enable_locale_selector %}
+        <div class="locale-switcher">
+          {% form 'localization' %}
+            <select name="country_code">
+              {% for country in localization.available_countries %}
+                <option value="{{ country.iso_code }}" {% if country.iso_code == localization.country.iso_code %}selected{% endif %}>
+                  {{ country.name }} {{ country.currency.iso_code }}
+                </option>
+              {% endfor %}
+            </select>
+          {% endform %}
+        </div>
+      {% endif %}
+
+      <!-- Search -->
+      {% if section.settings.enable_search %}
+        <a href="{{ routes.search_url }}" class="header__icon">
+          {% render 'icon-search' %}
+        </a>
+      {% endif %}
+
+      <!-- Account -->
+      {% if section.settings.enable_account and shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" class="header__icon">
+          {% render 'icon-account' %}
+        </a>
+      {% endif %}
+
+      <!-- Wishlist -->
+      {% if section.settings.enable_wishlist %}
+        <a href="/pages/wishlist" class="header__icon">
+          {% render 'icon-heart' %}
+          <span class="wishlist-count" data-wishlist-count>0</span>
+        </a>
+      {% endif %}
+
+      <!-- Compare -->
+      {% if section.settings.enable_compare %}
+        <a href="/pages/compare" class="header__icon">
+         {% render 'icon-compare' %}
+          <span class="compare-count" data-compare-count>0</span>
+        </a>
+      {% endif %}
+
+      <!-- Cart -->
+      {% if section.settings.enable_cart %}
+        <a href="{{ routes.cart_url }}" class="header__icon cart-icon">
+           {% render 'icon-cart' %}
+          {% if cart.item_count > 0 %}
+            <span class="cart-count">{{ cart.item_count }}</span>
+          {% endif %}
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+</header>
+
+{% stylesheet %}
+.site-header {
+  width: 100%;
+  background: linear-gradient(90deg, #4b5337, #444c33);
+  padding: 0 2rem;
+}
+.header__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo-text {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #fff;
+}
+.header__menu ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.header__menu ul li {
+  position: relative;
+}
+.header__menu ul li a {
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+}
+.header__menu ul li:hover .dropdown {
+  display: block;
+}
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #fff;
+  padding: 1rem;
+  min-width: 200px;
+}
+.dropdown li a {
+  color: #333;
+}
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.header__icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+.cart-count,
+.wishlist-count,
+.compare-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #e63946;
+  color: #fff;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 2px 6px;
+  display: none;
+}
+.cart-count.show,
+.wishlist-count.show,
+.compare-count.show {
+  display: inline-block;
+}
+.locale-switcher select {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+}
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Advanced Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_locale_selector",
+      "label": "Enable language/currency switcher",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_search",
+      "label": "Enable search",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_account",
+      "label": "Enable account",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_wishlist",
+      "label": "Enable wishlist",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_compare",
+      "label": "Enable compare",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_cart",
+      "label": "Enable cart",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

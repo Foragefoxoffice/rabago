@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    {% # Inlined CSS Variables %}
+    {% render 'css-variables' %}
+
+    {% # Load and preload the critical CSS %}
+    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'style.css' | asset_url | stylesheet_tag: preload: true }}
+    {% comment %} {{ 'tailwind-output.css' | asset_url | stylesheet_tag: preload: true }} {% endcomment %}
+     
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" async></script>
+
+    {%- comment -%} Load Tailwind runtime {%- endcomment -%}
+    <script src="{{ 'tailwind.js' | asset_url }}" type="module"></script>
+
+    {%- comment -%} Tailwind config (must be right after tailwind.js) {%- endcomment -%}
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: "#ff6600",
+            },
+            fontFamily: {
+              heading: ["Poppins", "sans-serif"],
+            }
+          }
+        }
+      }
+    </script>
+
+    {% # Social, title, etc. %}
+    {% render 'meta-tags' %}
+    
+    {{ content_for_header }}
+
+    <style>
+  :root {
+    /* Typography */
+    --font-primary--family: {{ settings.type_primary_font.family | json }};
+    --font-secondary--family: {{ settings.type_secondary_font.family | json }};
+    --base-font-size: {{ settings.base_font_size }}px;
+    --heading-transform: {{ settings.heading_transform }};
+
+    /* Layout */
+    --page-width: {{ settings.max_page_width }};
+    --page-margin: {{ settings.min_page_margin }}px;
+
+    /* Colors */
+    --color-background: {{ settings.background_color }};
+    --color-foreground: {{ settings.foreground_color }};
+    {% if settings.global_gradient != blank %}
+      --color-gradient: {{ settings.global_gradient }};
+    {% endif %}
+
+    /* Inputs */
+    --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
+
+    /* Buttons */
+    --button-bg: {{ settings.button_bg }};
+    --button-text: {{ settings.button_text }};
+    --button-radius: {{ settings.button_radius }}px;
+    --button-style: {{ settings.button_style }};
+
+    /* Animations */
+    --animation-speed: {{ settings.animation_speed }}ms;
+    --animation-style: {{ settings.animation_style }};
+
+    /* Grid */
+    --grid-gap: {{ settings.grid_gap }}px;
+    --card-radius: {{ settings.card_corner_radius }}px;
+    --card-shadow: {% if settings.enable_card_shadow %}0 4px 12px rgba(0,0,0,0.15){% else %}none{% endif %};
+ --page-width: {{ settings.max_page_width }};
+    --page-margin: {{ settings.min_page_margin }}px;
+
+    /* Header & Footer */
+    --footer-padding: {{ settings.footer_padding }}px;
+  }
+    /* Mobile first (small screens) */
+  @media (max-width: 767px) {
+    :root {
+      --page-width: 100%;
+      --page-margin: 16px;
+    }
+  }
+
+  /* Tablet screens */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    :root {
+      --page-width: calc({{ settings.max_page_width }} - 10rem);
+      --page-margin: 24px;
+    }
+  }
+
+  /* Desktop screens */
+  @media (min-width: 1024px) {
+    :root {
+      --page-width: {{ settings.max_page_width }};
+      --page-margin: 150px;
+    }
+  }
+
+  /* Optional boxed layout */
+  {% if settings.enable_boxed_layout %}
+    body {
+      max-width: var(--page-width);
+      margin-inline: auto;
+      background: var(--color-background);
+      box-shadow: 0 0 30px rgba(0,0,0,0.05);
+    }
+  {% endif %}
+</style>
+
+  </head>
+
+  <body>
+    {% sections 'header-group' %}
+
+    {{ content_for_layout }}
+
+    {% sections 'footer-group' %}
+
+    <!-- Swiper JS -->
+
+
+  </body>
+</html>
